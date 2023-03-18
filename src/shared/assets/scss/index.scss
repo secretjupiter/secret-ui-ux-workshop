@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.react-select__control {
+  cursor: pointer !important;
+  @apply py-1 bg-neutral-200 dark:bg-neutral-800 border-neutral-400 dark:border-neutral-600 text-black dark:text-white hover:bg-neutral-400 dark:hover:bg-neutral-600;
+}
+
+.react-select__single-value {
+  @apply text-black dark:text-white;
+}
+
+.react-select__menu,
+.react-select__option {
+  background-color: #737373 !important;
+}
+
+.react-select__option:hover {
+  background-color: #a3a3a3 !important;
+}
+
+.react-select-wrap__control {
+  cursor: pointer !important;
+  @apply py-1 bg-neutral-200 dark:bg-neutral-800 border-gray-500 dark:border-gray-500;
+  border-radius: 0.5rem 0 0 0.5rem !important;
+
+  &:hover {
+    background-color: #525252 !important;
+  }
+}
+
+.react-select-wrap__single-value {
+  @apply text-black dark:text-white;
+}
+
+.react-select-wrap__menu,
+.react-select-wrap__option {
+  background-color: #737373 !important;
+}
+
+.react-select-wrap__option:hover {
+  background-color: #a3a3a3 !important;
+}
+
+.react-select-wrap__indicator-separator {
+  display: none;
+}
+
+.react-select__indicator-separator {
+  display: none;
+}
+
+.react-select__value-container img {
+  display: none;
+}
+
+// Animations
+.fadeInAndOutLoop {
+  opacity: 1;
+  animation: fade 2s linear infinite;
+}
+
+@keyframes fade {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown2 {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -10%, 0);
+    transform: translate3d(0, -10%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.onEnter_fadeInDown {
+  animation: fadeInDown2 250ms ease-in-out;
+}
+
+@media screen and (min-width: 768px) {
+  #ibcSwitchButton {
+    padding-top: 100%;
+  }
+}
+
+#ibcSwitchButton {
+  @apply block;
+}
+
+.isInactiveNavLink {
+  svg {
+    @apply dark:fill-neutral-300 fill-neutral-700;
+  }
+
+  &:hover svg {
+    @apply fill-black dark:fill-white;
+  }
+}
+
+.isActiveNavLink {
+  svg {
+    @apply dark:fill-white fill-black;
+  }
+
+  &:hover svg {
+    @apply fill-black dark:fill-white;
+  }
+}
