@@ -37,10 +37,10 @@ export const chains: { [chain_name: string]: Chain } = {
     deposit_gas_denom: "uscrt",
     withdraw_channel_id: "",
     withdraw_gas: 0,
-    chain_id: "secret-4",
+    chain_id: "pulsar-2",
     bech32_prefix: "secret",
-    lcd: "https://lcd.mainnet.secretsaturn.net",
-    rpc: "https://grpc.mainnet.secretsaturn.net", // gRPC-web
+    lcd: "https://lcd.testnet.secretsaturn.net",
+    rpc: "https://grpc.testnet.secretsaturn.net", // gRPC-web
     chain_image: "img/assets/scrt.svg",
     explorer_account: "https://www.mintscan.io/secret/account/",
   },
@@ -319,9 +319,9 @@ export type Withdraw = {
 export const tokens: Token[] = [
   {
     name: "SCRT",
-    address: "secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
+    address: "secret18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg",
     code_hash:
-      "af74387e276be8874f07bec3a87023ee49b0e7ebe08178c49d0a49c3c98ed60e",
+      "9587D60B8E6B078ACE12014CEEEE089530B9FABCD76535D93666A6C127AD8813",
     image: "/scrt.svg",
     decimals: 6,
     coingecko_id: "secret",

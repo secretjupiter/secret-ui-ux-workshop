@@ -29,11 +29,15 @@ import {
 export const WrapContext = createContext(null);
 
 export function Wrap() {
+  const { secretjs, secretAddress, connectWallet } =
+    useContext(SecretjsContext);
 
-  const { secretjs, secretAddress, connectWallet } = useContext(SecretjsContext);
+  const { wrappingMode } = useState("Wrap");
 
   const [amountToWrap, setAmountToWrap] = useState<string>("");
-  const [selectedToken, setselectedToken] = useState<Token>(tokens.filter(token => token.name === "SCRT")[0]);
+  const [selectedToken, setselectedToken] = useState<Token>(
+    tokens.filter((token) => token.name === "SCRT")[0]
+  );
 
   // UI
   const [price, setPrice] = useState<number>();
@@ -51,8 +55,9 @@ export function Wrap() {
 
   function validateForm() {
     let isValid = false;
-    const availableAmount = new BigNumber(tokenNativeBalance
-    ).dividedBy(`1e${selectedToken.decimals}`);
+    const availableAmount = new BigNumber(tokenNativeBalance).dividedBy(
+      `1e${selectedToken.decimals}`
+    );
 
     const numberRegex = /^(?:[1-9]\d*|0)?(?:\.\d+)?$/;
 
@@ -85,7 +90,9 @@ export function Wrap() {
 
   useEffect(() => {
     // setting amountToWrap to max. value, if entered value is > available
-    const availableAmount = new BigNumber(tokenNativeBalance).dividedBy(`1e${selectedToken.decimals}`)
+    const availableAmount = new BigNumber(tokenNativeBalance).dividedBy(
+      `1e${selectedToken.decimals}`
+    );
     if (
       !new BigNumber(amountToWrap).isNaN() &&
       availableAmount.isGreaterThan(new BigNumber(0)) &&
@@ -111,7 +118,7 @@ export function Wrap() {
     setAmountToWrap(filteredValue);
   }
 
-  const message = `Converting publicly visible SCRT into its privacy-preserving equivalent sSCRT. These tokens are not publicly visible and require a viewing key!`
+  const message = `Converting publicly visible SCRT into its privacy-preserving equivalent sSCRT. These tokens are not publicly visible and require a viewing key!`;
 
   {
     new BigNumber(tokenWrappedBalance!)
@@ -322,8 +329,6 @@ export function Wrap() {
     }
   }
 
-
-
   function SubmitButton(props: {
     disabled: boolean;
     amount: string | undefined;
@@ -531,10 +536,13 @@ export function Wrap() {
           onClick={() => submit()}
         >
           {/* text for wrapping with value */}
-          {secretAddress && secretjs && amount && `Wrap ${amount} SCRT into ${amount} sSCRT`}
+          {secretAddress &&
+            secretjs &&
+            amount &&
+            `Wrap ${amount} SCRT into ${amount} sSCRT`}
 
           {/* general text without value */}
-          {(!amount || !secretAddress || !secretAddress) ? "Wrap" : null}
+          {!amount || !secretAddress || !secretAddress ? "Wrap" : null}
         </button>
       </div>
     );
@@ -702,9 +710,7 @@ export function Wrap() {
             </div>
 
             <div className="text-center my-4">
-              <div
-                className="inline-block bg-neutral-200 px-3 py-2 text-black transition-colors rounded-xl disabled:text-neutral-500 "
-              >
+              <div className="inline-block bg-neutral-200 px-3 py-2 text-black transition-colors rounded-xl disabled:text-neutral-500 ">
                 <FontAwesomeIcon icon={faDownLong} className="fa-fw" />
               </div>
             </div>
