@@ -10,6 +10,7 @@ import {
 import BigNumber from "bignumber.js";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "react-toastify/dist/ReactToastify.css";
 import {
   faKey,
   faArrowRightArrowLeft,
@@ -32,7 +33,7 @@ export function Wrap() {
   const { secretjs, secretAddress, connectWallet } =
     useContext(SecretjsContext);
 
-  const { wrappingMode } = useState("Wrap");
+  const [wrappingMode, setWrappingMode] = useState("Wrap");
 
   const [amountToWrap, setAmountToWrap] = useState<string>("");
   const [selectedToken, setselectedToken] = useState<Token>(
@@ -387,133 +388,65 @@ export function Wrap() {
             : `Unwrapping s${selectedToken.name}`,
           { closeButton: true }
         );
-        if (wrappingMode === "Wrap") {
-          await secretjs.tx
-            .broadcast(
-              [
-                new MsgExecuteContract({
-                  sender: secretAddress,
-                  contract_address: selectedToken.address,
-                  code_hash: selectedToken.code_hash,
-                  sent_funds: [
-                    { denom: selectedToken.withdrawals[0].from_denom, amount },
-                  ],
-                  msg: { deposit: {} },
-                } as any),
-              ],
-              {
-                gasLimit: 150_000,
-                gasPriceInFeeDenom: 0.25,
-                feeDenom: "uscrt",
-              }
-            )
-            .catch((error: any) => {
-              console.error(error);
-              if (error?.tx?.rawLog) {
+        await secretjs.tx
+          .broadcast(
+            [
+              new MsgExecuteContract({
+                sender: secretAddress,
+                contract_address: selectedToken.address,
+                code_hash: selectedToken.code_hash,
+                sent_funds: [
+                  { denom: selectedToken.withdrawals[0].from_denom, amount },
+                ],
+                msg: { deposit: {} },
+              } as any),
+            ],
+            {
+              gasLimit: 150_000,
+              gasPriceInFeeDenom: 0.25,
+              feeDenom: "uscrt",
+            }
+          )
+          .catch((error: any) => {
+            console.error(error);
+            if (error?.tx?.rawLog) {
+              toast.update(toastId, {
+                render: `Wrapping of ${selectedToken.name} failed: ${error.tx.rawLog}`,
+                type: "error",
+                isLoading: false,
+                closeOnClick: true,
+              });
+            } else {
+              toast.update(toastId, {
+                render: `Wrapping of ${selectedToken.name} failed: ${error.message}`,
+                type: "error",
+                isLoading: false,
+                closeOnClick: true,
+              });
+            }
+          })
+          .then((tx: any) => {
+            console.log(tx);
+            if (tx) {
+              if (tx.code === 0) {
+                setAmountToWrap("");
                 toast.update(toastId, {
-                  render: `Wrapping of ${selectedToken.name} failed: ${error.tx.rawLog}`,
-                  type: "error",
+                  render: `Wrapped ${selectedToken.name} successfully`,
+                  type: "success",
                   isLoading: false,
                   closeOnClick: true,
                 });
+                setIsValidationActive(false);
               } else {
                 toast.update(toastId, {
-                  render: `Wrapping of ${selectedToken.name} failed: ${error.message}`,
+                  render: `Wrapping of ${selectedToken.name} failed: ${tx.rawLog}`,
                   type: "error",
                   isLoading: false,
                   closeOnClick: true,
                 });
               }
-            })
-            .then((tx: any) => {
-              console.log(tx);
-              if (tx) {
-                if (tx.code === 0) {
-                  setAmountToWrap("");
-                  toast.update(toastId, {
-                    render: `Wrapped ${selectedToken.name} successfully`,
-                    type: "success",
-                    isLoading: false,
-                    closeOnClick: true,
-                  });
-                  setIsValidationActive(false);
-                } else {
-                  toast.update(toastId, {
-                    render: `Wrapping of ${selectedToken.name} failed: ${tx.rawLog}`,
-                    type: "error",
-                    isLoading: false,
-                    closeOnClick: true,
-                  });
-                }
-              }
-            });
-        } else {
-          await secretjs.tx
-            .broadcast(
-              [
-                new MsgExecuteContract({
-                  sender: secretAddress,
-                  contract_address: selectedToken.address,
-                  code_hash: selectedToken.code_hash,
-                  sent_funds: [],
-                  msg: {
-                    redeem: {
-                      amount,
-                      denom:
-                        selectedToken.name === "SCRT"
-                          ? undefined
-                          : selectedToken.withdrawals[0].from_denom,
-                    },
-                  },
-                } as any),
-              ],
-              {
-                gasLimit: 150_000,
-                gasPriceInFeeDenom: 0.25,
-                feeDenom: "uscrt",
-              }
-            )
-            .catch((error: any) => {
-              console.error(error);
-              if (error?.tx?.rawLog) {
-                toast.update(toastId, {
-                  render: `Unwrapping of s${selectedToken.name} failed: ${error.tx.rawLog}`,
-                  type: "error",
-                  isLoading: false,
-                  closeOnClick: true,
-                });
-              } else {
-                toast.update(toastId, {
-                  render: `Unwrapping of s${selectedToken.name} failed: ${error.message}`,
-                  type: "error",
-                  isLoading: false,
-                  closeOnClick: true,
-                });
-              }
-            })
-            .then((tx: any) => {
-              console.log(tx);
-              if (tx) {
-                if (tx.code === 0) {
-                  setAmountToWrap("");
-                  toast.update(toastId, {
-                    render: `Unwrapped s${selectedToken.name} successfully`,
-                    type: "success",
-                    isLoading: false,
-                    closeOnClick: true,
-                  });
-                  setIsValidationActive(false);
-                } else {
-                  toast.update(toastId, {
-                    render: `Unwrapping of s${selectedToken.name} failed: ${tx.rawLog}`,
-                    type: "error",
-                    isLoading: false,
-                    closeOnClick: true,
-                  });
-                }
-              }
-            });
-        }
+            }
+          });
       } finally {
         setLoadingWrapOrUnwrap(false);
         try {
