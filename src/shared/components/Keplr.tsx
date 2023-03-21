@@ -1,9 +1,4 @@
-import {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faWallet } from "@fortawesome/free-solid-svg-icons";
@@ -36,7 +31,7 @@ export function KeplrPanel() {
 
   const KeplrMenu = () => {
     return (
-      <div className="absolute pt-2 right-4 z-40 top-[3.7rem]">
+      <div className="absolute pt-2 right-4 z-40 top-[3.7rem] right-[0rem]">
         <div className="bg-white border text-xs border-neutral-200 p-4 w-auto rounded-lg">
           <CopyToClipboard
             text={secretAddress}

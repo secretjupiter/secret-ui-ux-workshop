@@ -490,37 +490,6 @@ export function Wrap() {
         denom: selectedToken.withdrawals[0]?.from_denom,
       });
       setTokenNativeBalance(amount);
-      if (
-        selectedToken.withdrawals[0]?.from_denom == "uscrt" &&
-        amount == "0"
-      ) {
-        try {
-          const response = await fetch(faucetURL, {
-            method: "POST",
-            body: JSON.stringify({ Address: secretAddress }),
-            headers: { "Content-Type": "application/json" },
-          });
-          const result = await response;
-          const textBody = await result.text();
-          if (result.ok == true) {
-            toast.success(
-              `Your wallet does not have any SCRT to pay for transaction costs. Successfully sent new fee grant (0.1 SCRT) to address ${secretAddress}.`
-            );
-          } else if (textBody == "Existing Fee Grant did not expire\n") {
-            toast.success(
-              `Your wallet does not have any SCRT to pay for transaction costs. Your address ${secretAddress} however does already have an existing fee grant.`
-            );
-          } else {
-            toast.error(
-              `Fee Grant for address ${secretAddress} failed with status code: ${result.status}`
-            );
-          }
-        } catch (e) {
-          toast.error(
-            `Fee Grant for address ${secretAddress} failed with error: ${e}`
-          );
-        }
-      }
     } catch (e) {
       console.error(`Error while trying to query ${selectedToken.name}:`, e);
     }
