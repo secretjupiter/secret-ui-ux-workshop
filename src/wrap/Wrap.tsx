@@ -1,25 +1,16 @@
 import { useEffect, useState, useContext, createContext } from "react";
 import { MsgExecuteContract } from "secretjs";
 import { Token, tokens } from "shared/utils/config";
-import {
-  sleep,
-  faucetURL,
-  viewingKeyErrorString,
-  usdString,
-} from "shared/utils/commons";
+import { sleep, viewingKeyErrorString, usdString } from "shared/utils/commons";
 import BigNumber from "bignumber.js";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-toastify/dist/ReactToastify.css";
 import {
   faKey,
-  faArrowRightArrowLeft,
-  faRightLeft,
   faInfoCircle,
   faDownLong,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import Select from "react-select";
 import Tooltip from "@mui/material/Tooltip";
 import {
   getKeplrViewingKey,
