@@ -6,9 +6,6 @@ import { toHex, toUtf8 } from "secretjs";
 
 export const viewingKeyErrorString = "🧐";
 
-export const faucetURL = "https://faucet.secretsaturn.net/claim";
-export const faucetAddress = "secret1tq6y8waegggp4fv2fcxk3zmpsmlfadyc7lsd69";
-
 export const dAppsURL =
   "https://secretadmin.scrt.network/api/ecosystem-dapps?populate=deep&pagination[pageSize]=1000";
 

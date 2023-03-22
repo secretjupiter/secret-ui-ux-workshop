@@ -1,8 +1,7 @@
 import React from "react";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
 import { BreakpointProvider } from "react-socks";
-import "shared/assets/scss/index.scss";
-// import "animate.css";
+import "shared/assets/scss/index.css";
 import { Buffer } from "buffer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ReactDOM from "react-dom/client";
@@ -15,11 +14,9 @@ import DefaultLayout from "shared/layouts/DefaultLayout";
 // Contexts
 import { SecretjsContextProvider } from "shared/context/SecretjsContext";
 
-export const websiteName = "Secret UI/UX Workshop";
-
 globalThis.Buffer = Buffer;
 declare global {
-  interface Window extends KeplrWindow { }
+  interface Window extends KeplrWindow {}
 }
 window.addEventListener("keplr_keystorechange", () => {
   console.log("Key store in Keplr is changed. Refreshing page.");
@@ -78,7 +75,7 @@ export default function App() {
   return (
     <>
       <Helmet>
-        <title>{websiteName}</title>
+        <title>Secret UI / UX Workshop</title>
       </Helmet>
       <Routes>
         <Route path="*" element={<Wrap />} />

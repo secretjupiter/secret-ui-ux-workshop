@@ -1,46 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- SEO -->
+    <!-- Title -->
+    <meta name="application-name" content="Secret Dashboard" />
+    <meta name="title" content="Secret Dashboard" />
+    <meta name="twitter:title" content="Secret Dashboard" />
+    <meta property="og:title" content="Secret Dashboard" />
 
-  <title>Secret Dashboard</title>
+    <!-- Description -->
+    <meta
+      name="description"
+      content="Secret Dashboard: An entry point for new users into Secret Network"
+    />
+    <meta
+      name="twitter:description"
+      content="Secret Dashboard: An entry point for new users into Secret Network"
+    />
+    <meta
+      property="og:description"
+      content="Secret Dashboard: An entry point for new users into Secret Network"
+    />
 
-  <!-- SEO -->
-  <!-- Title -->
-  <meta name="application-name" content="Secret Dashboard" />
-  <meta name="title" content="Secret Dashboard" />
-  <meta name="twitter:title" content="Secret Dashboard" />
-  <meta property="og:title" content="Secret Dashboard" />
+    <!-- Image -->
+    <meta name="twitter:image" content="socials-preview.png" />
+    <meta property="og:image" content="socials-preview.png" />
 
-  <!-- Description -->
-  <meta name="description" content="Secret Dashboard: An entry point for new users into Secret Network" />
-  <meta name="twitter:description" content="Secret Dashboard: An entry point for new users into Secret Network" />
-  <meta property="og:description" content="Secret Dashboard: An entry point for new users into Secret Network" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@SecretNetwork" />
+    <meta name="twitter:creator" content="@SecretNetwork" />
 
-  <!-- Image -->
-  <meta name="twitter:image" content="socials-preview.png" />
-  <meta property="og:image" content="socials-preview.png" />
+    <!-- Facebook/Telegram -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Secret Dashboard" />
+    <meta property="og:url" content="https://wrap.scrt.network" />
+    <meta property="og:locale" content="en_US" />
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@SecretNetwork" />
-  <meta name="twitter:creator" content="@SecretNetwork" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="prefetch" href="https://scrt.network" />
+    <!-- WHIP-003 IBC icons -->
+    <!-- sSCRT - Secret Secret -->
 
-  <!-- Facebook/Telegram -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Secret Dashboard" />
-  <meta property="og:url" content="https://wrap.scrt.network" />
-  <meta property="og:locale" content="en_US" />
-
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="prefetch" href="https://scrt.network" />
-  <!-- WHIP-003 IBC icons -->
-  <!-- sSCRT - Secret Secret -->
-
-  <!-- WHIP-003 definitions -->
-  <script type="application/toml" data-whip-003>
+    <!-- WHIP-003 definitions -->
+    <script type="application/toml" data-whip-003>
       # WHIP-003 IBC definitions
 
       # sSCRT - Secret Secret
@@ -237,19 +243,18 @@
       [contracts.cosmos_secret-4_stkd-scrt.snip20]
       symbol = "stkd-SCRT"
     </script>
-</head>
+  </head>
 
-<body>
-  <div id="root" class="bg-slate-100 text-black"></div>
-  <script>
-    // fix the keplr window type error when there are no node polyfills
-    var global = global || window;
-  </script>
-  <script type="module">
-    import { Buffer } from "buffer";
-    window.Buffer = Buffer;
-  </script>
-  <script type="module" src="/src/App.tsx"></script>
-</body>
-
+  <body>
+    <div id="root" class="bg-slate-100 text-black"></div>
+    <script>
+      // fix the keplr window type error when there are no node polyfills
+      var global = global || window;
+    </script>
+    <script type="module">
+      import { Buffer } from "buffer";
+      window.Buffer = Buffer;
+    </script>
+    <script type="module" src="/src/App.tsx"></script>
+  </body>
 </html>

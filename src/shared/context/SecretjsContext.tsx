@@ -1,21 +1,15 @@
 import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 import { SecretNetworkClient } from "secretjs";
-import { faucetURL } from "shared/utils/commons";
 import { SECRET_CHAIN_ID, SECRET_LCD } from "shared/utils/config";
 import GetWalletModal from "./GetWalletModal";
 
 const SecretjsContext = createContext(null);
 
-export type FeeGrantStatus = "Success" | "Fail" | "Untouched";
-
 const SecretjsContextProvider = ({ children }: any) => {
   const [secretjs, setSecretjs] = useState<SecretNetworkClient | null>(null);
   const [secretAddress, setSecretAddress] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFeeGranted, setIsFeeGranted] = useState<boolean>(false);
-  const [feeGrantStatus, setFeeGrantStatus] =
-    useState<FeeGrantStatus>("Untouched");
 
   async function setupKeplr(
     setSecretjs: React.Dispatch<
@@ -70,50 +64,10 @@ const SecretjsContextProvider = ({ children }: any) => {
     }
   }
 
-  async function requestFeeGrant() {
-    if (feeGrantStatus !== "Success") {
-      fetch(faucetURL, {
-        method: "POST",
-        body: JSON.stringify({ Address: secretAddress }),
-        headers: { "Content-Type": "application/json" },
-      })
-        .then(async (result) => {
-          const textBody = await result.text();
-          // console.log(textBody);
-          if (result.ok == true) {
-            setFeeGrantStatus("Success");
-            toast.success(
-              `Successfully sent new fee grant (0.1 SCRT) to address ${secretAddress}`
-            );
-          } else if (textBody == "Existing Fee Grant did not expire\n") {
-            setFeeGrantStatus("Success");
-            toast.success(
-              `Your address ${secretAddress} already has an existing fee grant`
-            );
-          } else {
-            setFeeGrantStatus("Fail");
-            toast.error(
-              `Fee Grant for address ${secretAddress} failed with status code: ${result.status}`
-            );
-          }
-        })
-        .catch((error) => {
-          setFeeGrantStatus("Fail");
-          toast.error(
-            `Fee Grant for address ${secretAddress} failed with error: ${error}`
-          );
-        });
-    }
-  }
-
   function disconnectWallet() {
     // reset secretjs and secretAddress
     setSecretAddress("");
     setSecretjs(null);
-
-    // reset fee grant
-    setIsFeeGranted(false);
-    setFeeGrantStatus("Untouched");
 
     // disable auto connect
     localStorage.setItem("keplrAutoConnect", "false");
@@ -133,9 +87,6 @@ const SecretjsContextProvider = ({ children }: any) => {
         disconnectWallet,
         isModalOpen,
         setIsModalOpen,
-        feeGrantStatus,
-        setFeeGrantStatus,
-        requestFeeGrant,
       }}
     >
       <GetWalletModal
