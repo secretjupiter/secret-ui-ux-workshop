@@ -1,4 +1,4 @@
-![Secret Network Banner](banner.png)
+![Secret Developer Workshop Banner](banner.avif)
 
 # Secret Developer Workshop: Delivering good UI/UX for users
 
