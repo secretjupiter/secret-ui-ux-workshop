@@ -622,7 +622,7 @@ export function Wrap() {
                     className="w-5 h-5 mr-2 rounded-full"
                   />
                   <span className="font-semibold text-sm">
-                    {selectedToken.name}
+                    s{selectedToken.name}
                   </span>
                 </div>
                 <input
