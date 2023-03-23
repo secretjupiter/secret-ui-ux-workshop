@@ -31,31 +31,35 @@ export function KeplrPanel() {
 
   const KeplrMenu = () => {
     return (
-      <div className="absolute pt-2 z-40 top-[3.7rem] right-[0rem]">
-        <div className="bg-white border text-xs border-neutral-200 p-4 w-auto rounded-lg">
-          <CopyToClipboard
-            text={secretAddress}
-            onCopy={() => {
-              toast.success("Address copied to clipboard!");
-            }}
-          >
-            <button className="px-2 py-1 mb-2 rounded-lg flex gap-2 items-center group bg-neutral-100 hover:bg-neutral-200 transition-colors">
-              <span>
-                {secretAddress.slice(0, 14) + "..." + secretAddress.slice(-14)}
-              </span>
-              <FontAwesomeIcon
-                icon={faCopy}
-                className="block text-neutral-500 transition-colors"
-              />
-            </button>
-          </CopyToClipboard>
-          <div className="text-right">
-            <button
-              onClick={disconnectWallet}
-              className="font-semibold px-3 py-1.5 rounded-md text-white bg-red-500 hover:bg-red-400 hover:text-white transition-colors cursor-pointer"
+      <div className="relative">
+        <div className="absolute pt-2 z-40 right-0 top-0">
+          <div className="bg-white border text-xs border-neutral-200 p-4 w-auto rounded-lg">
+            <CopyToClipboard
+              text={secretAddress}
+              onCopy={() => {
+                toast.success("Address copied to clipboard!");
+              }}
             >
-              Disconnect Wallet
-            </button>
+              <button className="px-2 py-1 mb-2 rounded-lg flex gap-2 items-center group bg-neutral-100 hover:bg-neutral-200 transition-colors">
+                <span>
+                  {secretAddress.slice(0, 14) +
+                    "..." +
+                    secretAddress.slice(-14)}
+                </span>
+                <FontAwesomeIcon
+                  icon={faCopy}
+                  className="block text-neutral-500 transition-colors"
+                />
+              </button>
+            </CopyToClipboard>
+            <div className="text-right">
+              <button
+                onClick={disconnectWallet}
+                className="font-semibold px-3 py-1.5 rounded-md text-white bg-red-500 hover:bg-red-400 hover:text-white transition-colors cursor-pointer"
+              >
+                Disconnect Wallet
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -98,7 +102,6 @@ export function KeplrPanel() {
     return (
       <>
         <div ref={keplrRef}>
-          {isMenuVisible ? <KeplrMenu /> : null}
           <div
             className="w-full sm:w-auto rounded-lg px-4 py-3 bg-white border border-neutral-200 select-none cursor-pointer"
             onMouseOver={() => setIsMenuVisible(true)}
@@ -106,6 +109,7 @@ export function KeplrPanel() {
           >
             <Content />
           </div>
+          {isMenuVisible ? <KeplrMenu /> : null}
         </div>
       </>
     );
