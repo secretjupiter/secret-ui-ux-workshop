@@ -89,13 +89,13 @@ const SecretjsContextProvider = ({ children }: any) => {
         setIsModalOpen,
       }}
     >
-      <GetWalletModal
+      {/* <GetWalletModal
         open={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);
           document.body.classList.remove("overflow-hidden");
         }}
-      />
+      /> */}
       {children}
     </SecretjsContext.Provider>
   );

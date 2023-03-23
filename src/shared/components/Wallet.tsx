@@ -12,68 +12,68 @@ export function KeplrPanel() {
     secretjs,
     secretAddress,
     connectWallet,
-    disconnectWallet,
-    isModalOpen,
-    setIsModalOpen,
+    // disconnectWallet,
+    // isModalOpen,
+    // setIsModalOpen,
   } = useContext(SecretjsContext);
 
-  const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
+  // const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("keplrAutoConnect") === "true") {
-      connectWallet();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("keplrAutoConnect") === "true") {
+  //     connectWallet();
+  //   }
+  // }, []);
 
   const keplrRef = useRef();
 
-  useHoverOutside(keplrRef, () => setIsMenuVisible(false));
+  // useHoverOutside(keplrRef, () => setIsMenuVisible(false));
 
-  const KeplrMenu = () => {
-    return (
-      <div className="relative">
-        <div className="absolute pt-2 z-40 right-0 top-0">
-          <div className="bg-white border text-xs border-neutral-200 p-4 w-auto rounded-lg">
-            <CopyToClipboard
-              text={secretAddress}
-              onCopy={() => {
-                toast.success("Address copied to clipboard!");
-              }}
-            >
-              <button className="px-2 py-1 mb-2 rounded-lg flex gap-2 items-center group bg-neutral-100 hover:bg-neutral-200 transition-colors">
-                <span>
-                  {secretAddress.slice(0, 14) +
-                    "..." +
-                    secretAddress.slice(-14)}
-                </span>
-                <FontAwesomeIcon
-                  icon={faCopy}
-                  className="block text-neutral-500 transition-colors"
-                />
-              </button>
-            </CopyToClipboard>
-            <div className="text-right">
-              <button
-                onClick={disconnectWallet}
-                className="font-semibold px-3 py-1.5 rounded-md text-white bg-red-500 hover:bg-red-400 hover:text-white transition-colors cursor-pointer"
-              >
-                Disconnect Wallet
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  // const KeplrMenu = () => {
+  //   return (
+  //     <div className="relative">
+  //       <div className="absolute pt-2 z-40 right-0 top-0">
+  //         <div className="bg-white border text-xs border-neutral-200 p-4 w-auto rounded-lg">
+  //           <CopyToClipboard
+  //             text={secretAddress}
+  //             onCopy={() => {
+  //               toast.success("Address copied to clipboard!");
+  //             }}
+  //           >
+  //             <button className="px-2 py-1 mb-2 rounded-lg flex gap-2 items-center group bg-neutral-100 hover:bg-neutral-200 transition-colors">
+  //               <span>
+  //                 {secretAddress.slice(0, 14) +
+  //                   "..." +
+  //                   secretAddress.slice(-14)}
+  //               </span>
+  //               <FontAwesomeIcon
+  //                 icon={faCopy}
+  //                 className="block text-neutral-500 transition-colors"
+  //               />
+  //             </button>
+  //           </CopyToClipboard>
+  //           <div className="text-right">
+  //             <button
+  //               onClick={disconnectWallet}
+  //               className="font-semibold px-3 py-1.5 rounded-md text-white bg-red-500 hover:bg-red-400 hover:text-white transition-colors cursor-pointer"
+  //             >
+  //               Disconnect Wallet
+  //             </button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
-  const AnimatedDot = () => {
-    return (
-      <span className="flex relative h-2 w-2">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-1/2"></span>
-        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-      </span>
-    );
-  };
+  // const AnimatedDot = () => {
+  //   return (
+  //     <span className="flex relative h-2 w-2">
+  //       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-1/2"></span>
+  //       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+  //     </span>
+  //   );
+  // };
 
   const Content = () => {
     return (
@@ -81,13 +81,13 @@ export function KeplrPanel() {
         <div className="flex items-center font-semibold text-sm">
           <div className="flex items-center">
             {/* Animated Dot */}
-            {secretAddress.length > 0 ? (
+            {/* {secretAddress.length > 0 ? (
               <span className="mr-3">
                 <AnimatedDot />
               </span>
-            ) : null}
+            ) : null} */}
             {/* Wallet Icon */}
-            <FontAwesomeIcon icon={faWallet} className="mr-2" />
+            {/* <FontAwesomeIcon icon={faWallet} className="mr-2" /> */}
             {/* Connect Wallet || Connected */}
             <span className="flex-1">
               {secretAddress.length > 0 ? "Connected" : "Connect Wallet"}
@@ -104,25 +104,25 @@ export function KeplrPanel() {
         <div ref={keplrRef}>
           <div
             className="w-full sm:w-auto rounded-lg px-4 py-3 bg-white border border-neutral-200 select-none cursor-pointer"
-            onMouseOver={() => setIsMenuVisible(true)}
+            // onMouseOver={() => setIsMenuVisible(true)}
             ref={keplrRef}
           >
             <Content />
           </div>
-          {isMenuVisible ? <KeplrMenu /> : null}
+          {/* {isMenuVisible ? <KeplrMenu /> : null} */}
         </div>
       </>
     );
   } else {
     return (
       <>
-        <GetWalletModal
+        {/* <GetWalletModal
           open={isModalOpen}
           onClose={() => {
             setIsModalOpen(false);
             document.body.classList.remove("overflow-hidden");
           }}
-        />
+        /> */}
         <button
           id="keplr-button"
           onClick={() => connectWallet()}

@@ -203,126 +203,126 @@ export function Wrap() {
     }
   };
 
-  function PercentagePicker() {
-    return (
-      <div className="inline-flex rounded-full text-xs font-bold">
-        <button
-          onClick={() => setAmountByPercentage(25)}
-          className="bg-neutral-100 px-1.5 py-0.5 rounded-l-md transition-colors hover:bg-neutral-300 cursor-pointer disabled:text-neutral-500 disabled:hover:bg-neutral-900 disabled:cursor-default"
-          disabled={!secretjs || !secretAddress}
-        >
-          25%
-        </button>
-        <button
-          onClick={() => setAmountByPercentage(50)}
-          className="bg-neutral-100 px-1.5 py-0.5 border-l border-neutral-300 transition-colors hover:bg-neutral-300 cursor-pointer disabled:text-neutral-500 disabled:hover:bg-neutral-900 disabled:cursor-default"
-          disabled={!secretjs || !secretAddress}
-        >
-          50%
-        </button>
-        <button
-          onClick={() => setAmountByPercentage(75)}
-          className="bg-neutral-100 px-1.5 py-0.5 border-l border-neutral-300 transition-colors hover:bg-neutral-300 disabled:text-neutral-500 disabled:hover:bg-neutral-900 disabled:cursor-default"
-          disabled={!secretjs || !secretAddress}
-        >
-          75%
-        </button>
-        <button
-          onClick={() => setAmountByPercentage(100)}
-          className="bg-neutral-100 px-1.5 py-0.5 rounded-r-md border-l border-neutral-300 transition-colors hover:bg-neutral-300 disabled:text-neutral-500 disabled:hover:bg-neutral-900 disabled:cursor-default"
-          disabled={!secretjs || !secretAddress}
-        >
-          MAX
-        </button>
-      </div>
-    );
-  }
+  // function PercentagePicker() {
+  //   return (
+  //     <div className="inline-flex rounded-full text-xs font-bold">
+  //       <button
+  //         onClick={() => setAmountByPercentage(25)}
+  //         className="bg-neutral-100 px-1.5 py-0.5 rounded-l-md transition-colors hover:bg-neutral-300 cursor-pointer disabled:text-neutral-500 disabled:hover:bg-neutral-900 disabled:cursor-default"
+  //         disabled={!secretjs || !secretAddress}
+  //       >
+  //         25%
+  //       </button>
+  //       <button
+  //         onClick={() => setAmountByPercentage(50)}
+  //         className="bg-neutral-100 px-1.5 py-0.5 border-l border-neutral-300 transition-colors hover:bg-neutral-300 cursor-pointer disabled:text-neutral-500 disabled:hover:bg-neutral-900 disabled:cursor-default"
+  //         disabled={!secretjs || !secretAddress}
+  //       >
+  //         50%
+  //       </button>
+  //       <button
+  //         onClick={() => setAmountByPercentage(75)}
+  //         className="bg-neutral-100 px-1.5 py-0.5 border-l border-neutral-300 transition-colors hover:bg-neutral-300 disabled:text-neutral-500 disabled:hover:bg-neutral-900 disabled:cursor-default"
+  //         disabled={!secretjs || !secretAddress}
+  //       >
+  //         75%
+  //       </button>
+  //       <button
+  //         onClick={() => setAmountByPercentage(100)}
+  //         className="bg-neutral-100 px-1.5 py-0.5 rounded-r-md border-l border-neutral-300 transition-colors hover:bg-neutral-300 disabled:text-neutral-500 disabled:hover:bg-neutral-900 disabled:cursor-default"
+  //         disabled={!secretjs || !secretAddress}
+  //       >
+  //         MAX
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
-  function NativeTokenBalanceUi() {
-    if (
-      !loadingCoinBalance &&
-      secretjs &&
-      secretAddress &&
-      tokenNativeBalance
-    ) {
-      return (
-        <>
-          <span className="font-semibold">Available:</span>
-          <span className="font-medium">
-            {" " +
-              new BigNumber(tokenNativeBalance!)
-                .dividedBy(`1e${selectedToken.decimals}`)
-                .toFormat()}{" "}
-            {selectedToken.name} (
-            {usdString.format(
-              new BigNumber(tokenNativeBalance!)
-                .dividedBy(`1e${selectedToken.decimals}`)
-                .multipliedBy(Number(price))
-                .toNumber()
-            )}
-            )
-          </span>
-        </>
-      );
-    } else {
-      return <></>;
-    }
-  }
+  // function NativeTokenBalanceUi() {
+  //   if (
+  //     !loadingCoinBalance &&
+  //     secretjs &&
+  //     secretAddress &&
+  //     tokenNativeBalance
+  //   ) {
+  //     return (
+  //       <>
+  //         <span className="font-semibold">Available:</span>
+  //         <span className="font-medium">
+  //           {" " +
+  //             new BigNumber(tokenNativeBalance!)
+  //               .dividedBy(`1e${selectedToken.decimals}`)
+  //               .toFormat()}{" "}
+  //           {selectedToken.name} (
+  //           {usdString.format(
+  //             new BigNumber(tokenNativeBalance!)
+  //               .dividedBy(`1e${selectedToken.decimals}`)
+  //               .multipliedBy(Number(price))
+  //               .toNumber()
+  //           )}
+  //           )
+  //         </span>
+  //       </>
+  //     );
+  //   } else {
+  //     return <></>;
+  //   }
+  // }
 
-  function WrappedTokenBalanceUi() {
-    if (
-      loadingTokenBalance ||
-      !secretjs ||
-      !secretAddress ||
-      !tokenWrappedBalance
-    ) {
-      return <></>;
-    } else if (tokenWrappedBalance == viewingKeyErrorString) {
-      return (
-        <>
-          <span className="font-semibold">Available:</span>
-          <button
-            className="ml-2 font-semibold bg-neutral-100 px-1.5 py-0.5 rounded-md border-neutral-300 transition-colors hover:bg-neutral-300 disabled:text-neutral-500 disabled:hover:bg-neutral-100 disabled:cursor-default"
-            onClick={async () => {
-              await setKeplrViewingKey(selectedToken.address);
-              try {
-                setLoadingTokenBalance(true);
-                await sleep(1000); // sometimes query nodes lag
-                await updateTokenBalance();
-              } finally {
-                setLoadingTokenBalance(false);
-              }
-            }}
-          >
-            <FontAwesomeIcon icon={faKey} className="mr-2" />
-            Set Viewing Key
-          </button>
-        </>
-      );
-    } else if (Number(tokenWrappedBalance) > -1) {
-      return (
-        <>
-          {/* Available: 0.123456 sSCRT () */}
-          <span className="font-bold">Available:</span>
-          <span className="font-medium">
-            {` ${new BigNumber(tokenWrappedBalance!)
-              .dividedBy(`1e${selectedToken.decimals}`)
-              .toFormat()} s` +
-              selectedToken.name +
-              ` (${usdString.format(
-                new BigNumber(tokenWrappedBalance!)
-                  .dividedBy(`1e${selectedToken.decimals}`)
-                  .multipliedBy(Number(price))
-                  .toNumber()
-              )})`}
-          </span>
-        </>
-      );
-    }
-  }
+  // function WrappedTokenBalanceUi() {
+  //   if (
+  //     loadingTokenBalance ||
+  //     !secretjs ||
+  //     !secretAddress ||
+  //     !tokenWrappedBalance
+  //   ) {
+  //     return <></>;
+  //   } else if (tokenWrappedBalance == viewingKeyErrorString) {
+  //     return (
+  //       <>
+  //         <span className="font-semibold">Available:</span>
+  //         <button
+  //           className="ml-2 font-semibold bg-neutral-100 px-1.5 py-0.5 rounded-md border-neutral-300 transition-colors hover:bg-neutral-300 disabled:text-neutral-500 disabled:hover:bg-neutral-100 disabled:cursor-default"
+  //           onClick={async () => {
+  //             await setKeplrViewingKey(selectedToken.address);
+  //             try {
+  //               setLoadingTokenBalance(true);
+  //               await sleep(1000); // sometimes query nodes lag
+  //               await updateTokenBalance();
+  //             } finally {
+  //               setLoadingTokenBalance(false);
+  //             }
+  //           }}
+  //         >
+  //           <FontAwesomeIcon icon={faKey} className="mr-2" />
+  //           Set Viewing Key
+  //         </button>
+  //       </>
+  //     );
+  //   } else if (Number(tokenWrappedBalance) > -1) {
+  //     return (
+  //       <>
+  //         {/* Available: 0.123456 sSCRT () */}
+  //         <span className="font-bold">Available:</span>
+  //         <span className="font-medium">
+  //           {` ${new BigNumber(tokenWrappedBalance!)
+  //             .dividedBy(`1e${selectedToken.decimals}`)
+  //             .toFormat()} s` +
+  //             selectedToken.name +
+  //             ` (${usdString.format(
+  //               new BigNumber(tokenWrappedBalance!)
+  //                 .dividedBy(`1e${selectedToken.decimals}`)
+  //                 .multipliedBy(Number(price))
+  //                 .toNumber()
+  //             )})`}
+  //         </span>
+  //       </>
+  //     );
+  //   }
+  // }
 
   function SubmitButton(props: {
-    disabled: boolean;
+    disabled?: boolean;
     amount: string | undefined;
     nativeCurrency: string;
     wrappedAmount: string | undefined;
@@ -509,11 +509,11 @@ export function Wrap() {
       });
   }, []);
 
-  const handleClick = () => {
-    if (!secretAddress || !secretjs) {
-      connectWallet();
-    }
-  };
+  // const handleClick = () => {
+  //   if (!secretAddress || !secretjs) {
+  //     connectWallet();
+  //   }
+  // };
 
   return (
     <>
@@ -529,7 +529,7 @@ export function Wrap() {
             // Overlay to connect on click
             <div
               className="absolute block top-0 left-0 right-0 bottom-0 z-10"
-              onClick={handleClick}
+              // onClick={handleClick}
             ></div>
           ) : null}
           {/* Content */}
@@ -540,11 +540,11 @@ export function Wrap() {
                 Secret Wrap
               </h1>
 
-              <Tooltip title={message} placement="right" arrow>
+              {/* <Tooltip title={message} placement="right" arrow>
                 <span className="ml-2 mt-1 text-neutral-600 hover:text-black transition-colors cursor-pointer">
                   <FontAwesomeIcon icon={faInfoCircle} />
                 </span>
-              </Tooltip>
+              </Tooltip> */}
             </div>
 
             {/* *** From *** */}
@@ -592,14 +592,14 @@ export function Wrap() {
               </div>
 
               {/* Balance | [25%|50%|75%|Max] */}
-              <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 mt-2">
+              {/* <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 mt-2">
                 <div className="flex-1 text-xs">
                   <NativeTokenBalanceUi />
                 </div>
                 <div className="sm:flex-initial text-xs">
                   <PercentagePicker />
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="text-center my-4">
@@ -638,14 +638,14 @@ export function Wrap() {
                   disabled={!secretjs || !secretAddress}
                 />
               </div>
-              <div className="flex-1 text-xs mt-3 text-center sm:text-left h-[1rem]">
+              {/* <div className="flex-1 text-xs mt-3 text-center sm:text-left h-[1rem]">
                 <WrappedTokenBalanceUi />
-              </div>
+              </div> */}
             </div>
 
             {/* Submit Button */}
             <SubmitButton
-              disabled={!secretjs || !selectedToken.address || !secretAddress}
+              // disabled={!secretjs || !selectedToken.address || !secretAddress}
               amount={amountToWrap}
               nativeCurrency={selectedToken.name}
               wrappedAmount={amountToWrap}
